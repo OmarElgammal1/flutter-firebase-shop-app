@@ -25,3 +25,30 @@ doc/api/
 
 .flutter-plugins
 .flutter-plugins-dependencies
+
+
+# Flutter/Dart specific
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+
+# Ignore Xcode and Android specific files
+ios/Flutter/Flutter.framework/
+ios/Flutter/Flutter.podspec
+android/.gradle/
+android/.idea/
+android/app/*.iml
+ios/Pods/
+
+# IntelliJ/Android Studio/VSCode IDEs
+.idea/
+*.iml
+.vscode/
+
+# Other system-specific files
+.DS_Store
+*.log
+*.lock

@@ -11,9 +11,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      //home: ProductScreen(screenType: 'Wishlist'), // Start with Wishlist or any screen type
+      home: ProductScreen(screenType: 'Wishlist'), // Start with Wishlist or any screen type
       //home: ReviewsScreen(),
-      home: AddReviewScreen(),
+      //home: AddReviewScreen(),
     );
   }
 }

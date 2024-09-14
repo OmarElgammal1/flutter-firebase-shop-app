@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
+import 'shop_app_bar.dart';
+
 
 // Sample data
 List<Map<String, dynamic>> products = [
@@ -73,8 +75,8 @@ class ProductScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(screenType),
+      appBar: ShopAppBar(
+        title: screenType,
       ),
       body: GridView.builder(
         itemCount: products.length,

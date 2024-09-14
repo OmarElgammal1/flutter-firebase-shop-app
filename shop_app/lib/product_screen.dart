@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
 import 'shop_app_bar.dart';
+import 'nav_bar.dart';
 
 
 // Sample data
@@ -102,6 +103,7 @@ class ProductScreen extends StatelessWidget {
           );
         },
       ),
+      bottomNavigationBar: ShopNavBar(),
     );
   }
 }

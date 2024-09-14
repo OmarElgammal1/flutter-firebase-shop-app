@@ -1,18 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(ReviewApp());
-}
 
-class ReviewApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: AddReviewScreen(),
-    );
-  }
-}
 
 class AddReviewScreen extends StatefulWidget {
   @override

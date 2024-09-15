@@ -3,7 +3,6 @@ import 'product_card.dart';
 import 'shop_app_bar.dart';
 import 'nav_bar.dart';
 import 'data.dart';
-import 'product_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   final String screenType;
@@ -18,30 +17,66 @@ class HomeScreen extends StatelessWidget {
       appBar: ShopAppBar(
         title: screenType,
       ),
-      body: GridView.builder(
-        itemCount: productList.length,
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-        ),
-        itemBuilder: (context, index) {
-          var productEntry = productList[index];
-          var product = productEntry.value;
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            floating: true,
+            pinned: false,
+            backgroundColor: Colors.white,
+            elevation: 0,
+            flexibleSpace: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  color: Colors.grey[300],
+                ),
+                padding: EdgeInsets.all(10.0),
+                child: Row(
+                  children: [
+                    Icon(Icons.search, color: Colors.grey[700]),
+                    SizedBox(width: 10.0),
+                    Text(
+                      'Search',
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            expandedHeight: 80.0,
+          ),
+          SliverGrid(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 10.0,
+              mainAxisSpacing: 10.0,
+              childAspectRatio: 0.75,
+            ),
+            delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                var productEntry = productList[index];
+                var product = productEntry.value;
 
-          return ProductCard(
-            id: productEntry.key,
-            productName: product['productName'],
-            imageUrl: product['imageUrls'][0],
-            price: product['price'],
-            isFavorite: product['isFavorite'],
-            screenType: screenType,
-            onAddToCart: () {
-              print('${product['productName']} added to cart');
-            },
-            onRemoveFromWishlist: () {
-              print('${product['productName']} removed from wishlist');
-            },
-          );
-        },
+                return ProductCard(
+                  id: productEntry.key,
+                  productName: product['productName'],
+                  imageUrl: product['imageUrls'][0],
+                  price: product['price'],
+                  isFavorite: product['isFavorite'],
+                  screenType: screenType,
+                  onAddToCart: () {
+                    print('${product['productName']} added to cart');
+                  },
+                  onRemoveFromWishlist: () {
+                    print('${product['productName']} removed from wishlist');
+                  },
+                );
+              },
+              childCount: productList.length,
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: ShopNavBar(),
     );

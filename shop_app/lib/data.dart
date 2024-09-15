@@ -9,7 +9,8 @@ Map<int, Map<String, dynamic>> products = {
     'price': 99.0,
     'imageUrls': [
       'https://en-kw.sssports.com/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw58f7d23c/sss/SSS2/N/K/C/Z/7/SSS2_NKCZ7718_510_194501879071_1.jpg?sw=700&sh=700&sm=fit',
-      'https://en-kw.sssports.com/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw58f7d23c/sss/SSS2/N/K/C/Z/7/SSS2_NKCZ7718_510_194501879071_1.jpg?sw=700&sh=700&sm=fit'
+      'https://en-kw.sssports.com/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw29b01461/sss/SSS2/N/K/D/R/7/SSS2_NKDR7571_010_196147019378_2.jpg?sw=700&sh=700&sm=fit',
+      'https://en-kw.sssports.com/dw/image/v2/BDVB_PRD/on/demandware.static/-/Sites-akeneo-master-catalog/default/dw29b01461/sss/SSS2/N/K/D/R/7/SSS2_NKDR7571_010_196147019378_2.jpg?sw=700&sh=700&sm=fit'
     ],
     'isFavorite': true,
     'reviews': [

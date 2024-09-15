@@ -27,7 +27,18 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: ShopAppBar(title: "Reviews"),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context); // Handle back action
+          },
+        ),
+        title: Text('Reviews'),
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.black,
+        elevation: 0,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: SingleChildScrollView(
@@ -141,7 +152,7 @@ class _ReviewsScreenState extends State<ReviewsScreen> {
               CircleAvatar(
                 radius: 30.0,
                 backgroundImage: NetworkImage(
-                  'https://img.freepik.com/free-photo/portrait-man-laughing_23-2148859448.jpg?size=338&ext=jpg&ga=GA1.1.2008272138.1726272000&semt=ais_hybrid',
+                  'https://i.pravatar.cc/150?img=3',
                 ),
               ),
               SizedBox(width: 15.0),

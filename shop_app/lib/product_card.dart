@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/data.dart';
+import 'data.dart';
 import 'product_details_screen.dart';
 
 class ProductCard extends StatefulWidget {
@@ -10,7 +10,8 @@ class ProductCard extends StatefulWidget {
   final bool isFavorite;
   final String screenType;
   final VoidCallback? onAddToCart;
-  final VoidCallback? onRemoveFromWishlist;
+  final VoidCallback? onRemoveFromCart;
+  final String? size; // New optional size attribute
 
   ProductCard({
     required this.id,
@@ -20,7 +21,8 @@ class ProductCard extends StatefulWidget {
     this.isFavorite = false,
     required this.screenType,
     this.onAddToCart,
-    this.onRemoveFromWishlist,
+    this.onRemoveFromCart,
+    this.size, // Accepting optional size
   });
 
   @override
@@ -43,11 +45,6 @@ class _ProductCardState extends State<ProductCard> {
 
     products[widget.id]?['isFavorite'] = _isFavorite;
     print(products[widget.id]?['isFavorite']);
-    /*if (_isFavorite) {
-      print('${widget.productName} added to wishlist');
-    } else {
-      print('${widget.productName} removed from wishlist');
-    }*/
   }
 
   @override
@@ -64,45 +61,80 @@ class _ProductCardState extends State<ProductCard> {
       },
       child: Card(
         elevation: 5,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
           children: [
-            Stack(
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Image.network(widget.imageUrl,
-                    fit: BoxFit.cover, height: 120, width: double.infinity),
-                Positioned(
-                  top: 8,
-                  right: 8,
-                  child: GestureDetector(
-                    onTap: toggleFavorite,
-                    child: Icon(
-                      _isFavorite ? Icons.favorite : Icons.favorite_border,
-                      color: _isFavorite ? Colors.red : Colors.grey,
+                Stack(
+                  children: [
+                    // Product Image
+                    Image.network(widget.imageUrl,
+                        fit: BoxFit.cover, height: 120, width: double.infinity),
+
+                    // Favorite Icon (Top-right corner)
+                    Positioned(
+                      top: 8,
+                      right: 8,
+                      child: GestureDetector(
+                        onTap: toggleFavorite,
+                        child: Icon(
+                          _isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: _isFavorite ? Colors.red : Colors.grey,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                // Product Name and Price
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(widget.productName,
+                          style: TextStyle(fontWeight: FontWeight.bold)),
+                      Text("\$${widget.price.toString()}",
+                          style: TextStyle(color: Colors.grey)),
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
+            // Delete button for Cart screen
+            if (widget.screenType == 'Cart')
+              Positioned(
+                bottom: 0,
+                right: 50,
+                child: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    if (widget.onRemoveFromCart != null)
+                      widget.onRemoveFromCart!();
+                  },
+                ),
+              ),
+            // Size display (bottom-right corner)
+            if (widget.size != null)
+              Positioned(
+                bottom: 8,
+                right: 8,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.6),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    widget.size!,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
                     ),
                   ),
                 ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(widget.productName,
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  Text("\$${widget.price.toString()}",
-                      style: TextStyle(color: Colors.grey)),
-                ],
-              ),
-            ),
-            if (widget.screenType == 'Cart')
-              IconButton(
-                icon: Icon(Icons.delete),
-                onPressed: () {
-                  if (widget.onRemoveFromWishlist != null)
-                    widget.onRemoveFromWishlist!();
-                },
               ),
           ],
         ),

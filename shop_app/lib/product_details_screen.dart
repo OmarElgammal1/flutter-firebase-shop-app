@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'data.dart';
+import 'reviews_screen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
   final int id;
-
 
   ProductDetailScreen({required this.id});
 
@@ -13,6 +13,7 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   String? selectedSize;
+  int selectedImageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -47,27 +48,45 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // main image
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 0),
               child: Image.network(
-                product['imageUrls'][0],
+                product['imageUrls'][selectedImageIndex],
                 fit: BoxFit.cover,
                 width: double.infinity,
                 height: 300,
               ),
             ),
+            // images row
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(product['imageUrls'].length, (index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Image.network(
-                      product['imageUrls'][index],
-                      fit: BoxFit.cover,
-                      width: 80,
-                      height: 80,
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        selectedImageIndex = index;
+                      });
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: selectedImageIndex == index ? Colors.purple : Colors.transparent,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Image.network(
+                          product['imageUrls'][index],
+                          fit: BoxFit.cover,
+                          width: 80,
+                          height: 80,
+                        ),
+                      )
                     ),
                   );
                 }),
@@ -85,8 +104,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   SizedBox(height: 4),
                   Text(
                     product['productName'],
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 24),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
                   ),
                   SizedBox(height: 8),
                   Row(
@@ -142,17 +160,41 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Reviews',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                  Row(
+                    children: [
+                      Text(
+                        'Reviews',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
+                      ),
+                      Spacer(),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ReviewsScreen(id: widget.id),
+                            ),
+                          );
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey,
+                        ),
+                        child: Text(
+                          'View all',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(height: 8),
                   Row(
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            'https://i.pravatar.cc/150?img=3'),
+                        backgroundImage:
+                        NetworkImage('https://i.pravatar.cc/150?img=3'),
                         radius: 20,
                       ),
                       SizedBox(width: 8),
@@ -173,13 +215,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       Spacer(),
                       Row(
                         children: List.generate(5, (starIndex) {
-                          if (starIndex < product['reviews'][0]['stars'].floor()) {
+                          if (starIndex <
+                              product['reviews'][0]['stars'].floor()) {
                             return Icon(Icons.star, color: Colors.amber, size: 16);
-                          } else if (starIndex == product['reviews'][0]['stars'].floor() &&
+                          } else if (starIndex ==
+                              product['reviews'][0]['stars'].floor() &&
                               product['reviews'][0]['stars'] % 1 != 0) {
-                            return Icon(Icons.star_half, color: Colors.amber, size: 16);
+                            return Icon(Icons.star_half,
+                                color: Colors.amber, size: 16);
                           } else {
-                            return Icon(Icons.star_border, color: Colors.amber, size: 16);
+                            return Icon(Icons.star_border,
+                                color: Colors.amber, size: 16);
                           }
                         }),
                       ),
@@ -212,7 +258,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   ElevatedButton(
                     onPressed: () {
                       if (selectedSize != null) {
-                        cart.add({'id': widget.id, 'quantity': 1, 'size': selectedSize});
+                        cart.add({
+                          'id': widget.id,
+                          'quantity': 1,
+                          'size': selectedSize,
+                        });
                         print(cart);
                       } else {
                         print('Please select a size');
@@ -220,7 +270,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
-                      padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                      padding:
+                      EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                     ),
                     child: Text(
                       'Add to Cart',
@@ -255,7 +306,11 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           borderRadius: BorderRadius.circular(4.0),
           color: isSelected ? Colors.purple.withOpacity(0.8) : null,
         ),
-        child: Text(size, style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: isSelected ? Colors.white : Colors.black)),
+        child: Text(size,
+            style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: isSelected ? Colors.white : Colors.black)),
       ),
     );
   }

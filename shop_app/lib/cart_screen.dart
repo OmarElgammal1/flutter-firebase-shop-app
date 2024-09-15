@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
-import 'data.dart'; // Assuming this contains the cart and orders lists
+import 'data.dart';
 
 class CartScreen extends StatefulWidget {
   final String screenType;
@@ -12,26 +12,22 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
-  void _removeFromCart(int productId) {
+  void _removeFromCart(int index) {
     setState(() {
-      cart.removeWhere((item) => item['id'] == productId);
+      cart.removeAt(index);
     });
   }
 
   void _checkout() {
     setState(() {
       orders.addAll(cart);
-      cart.clear();
+      cart = [];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.screenType),
-      ),
-      body: Column(
+    return  Column(
         children: [
           // Expanded ensures the grid takes up remaining space
           Expanded(
@@ -47,7 +43,7 @@ class _CartScreenState extends State<CartScreen> {
                 var cartItem = cart[index];
                 var productId = cartItem['id'];
                 var size = cartItem['size'];
-
+                var ind = index;
                 var product = products[productId];
 
                 if (product == null) {
@@ -62,8 +58,9 @@ class _CartScreenState extends State<CartScreen> {
                   isFavorite: product['isFavorite'],
                   screenType: 'Cart',
                   size: size,
+                  ind: ind,
                   onRemoveFromCart: () {
-                    _removeFromCart(productId);
+                    _removeFromCart(ind);
                   },
                 );
               },
@@ -86,7 +83,6 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
         ],
-      ),
-    );
+      );
   }
 }

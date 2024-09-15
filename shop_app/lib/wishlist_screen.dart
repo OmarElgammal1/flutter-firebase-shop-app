@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
-import 'shop_app_bar.dart';
-import 'nav_bar.dart';
+
 import 'data.dart';
 
 
@@ -17,11 +16,7 @@ class WishlistScreen extends StatelessWidget {
         .where((entry) => entry.value['isFavorite'] == true)
         .toList();
 
-    return Scaffold(
-      appBar: ShopAppBar(
-        title: screenType,
-      ),
-      body: GridView.builder(
+    return GridView.builder(
         itemCount: favoriteProducts.length,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -41,13 +36,12 @@ class WishlistScreen extends StatelessWidget {
             onAddToCart: () {
               print('${product['productName']} added to cart');
             },
-            onRemoveFromWishlist: () {
+            onRemoveFromCart: () {
               print('${product['productName']} removed from wishlist');
             },
           );
         },
-      ),
-      bottomNavigationBar: ShopNavBar(),
-    );
+      );
+
   }
 }

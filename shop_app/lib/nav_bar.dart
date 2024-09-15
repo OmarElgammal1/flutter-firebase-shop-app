@@ -29,7 +29,7 @@ class ShopNavBar extends StatelessWidget {
           label: 'Orders',
         ),
       ],
-      selectedItemColor: Colors.orange,
+      selectedItemColor: Colors.purple,
       unselectedItemColor: Colors.grey,
       showSelectedLabels: true,
       showUnselectedLabels: true,

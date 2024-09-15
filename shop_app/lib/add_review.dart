@@ -99,6 +99,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
                 child: Text("Submit Review"),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
+                  foregroundColor: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   textStyle: TextStyle(fontSize: 16),
                 ),

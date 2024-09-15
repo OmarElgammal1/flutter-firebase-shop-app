@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'product_card.dart';
-import 'shop_app_bar.dart';
-import 'nav_bar.dart';
 import 'data.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,11 +11,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var productList = products.entries.toList();
 
-    return Scaffold(
-      appBar: ShopAppBar(
-        title: screenType,
-      ),
-      body: CustomScrollView(
+    return CustomScrollView(
         slivers: [
           SliverAppBar(
             floating: true,
@@ -68,7 +62,7 @@ class HomeScreen extends StatelessWidget {
                   onAddToCart: () {
                     print('${product['productName']} added to cart');
                   },
-                  onRemoveFromWishlist: () {
+                  onRemoveFromCart: () {
                     print('${product['productName']} removed from wishlist');
                   },
                 );
@@ -77,8 +71,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
-      bottomNavigationBar: ShopNavBar(),
-    );
+      );
+
   }
 }

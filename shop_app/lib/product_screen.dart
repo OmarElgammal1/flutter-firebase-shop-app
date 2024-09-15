@@ -87,6 +87,7 @@ class ProductScreen extends StatelessWidget {
         itemBuilder: (context, index) {
           var product = products[index];
           return ProductCard(
+            id: index,
             productName: product['productName'],
             imageUrl: product['imageUrl'],
             price: product['price'],

@@ -11,7 +11,8 @@ class ProductCard extends StatefulWidget {
   final String screenType;
   final VoidCallback? onAddToCart;
   final VoidCallback? onRemoveFromCart;
-  final String? size; // New optional size attribute
+  final String? size;
+  final int? ind;
 
   ProductCard({
     required this.id,
@@ -22,7 +23,8 @@ class ProductCard extends StatefulWidget {
     required this.screenType,
     this.onAddToCart,
     this.onRemoveFromCart,
-    this.size, // Accepting optional size
+    this.size,
+    this.ind,
   });
 
   @override

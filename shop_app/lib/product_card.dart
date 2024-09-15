@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'product_details_screen.dart'; // Import the product detail screen
+import 'package:untitled/data.dart';
+import 'product_details_screen.dart';
 
 class ProductCard extends StatefulWidget {
-  final int id; // Add the product id
+  final int id;
   final String productName;
   final String imageUrl;
   final double price;
@@ -12,7 +13,7 @@ class ProductCard extends StatefulWidget {
   final VoidCallback? onRemoveFromWishlist;
 
   ProductCard({
-    required this.id, // Initialize the id
+    required this.id,
     required this.productName,
     required this.imageUrl,
     required this.price,
@@ -40,11 +41,13 @@ class _ProductCardState extends State<ProductCard> {
       _isFavorite = !_isFavorite;
     });
 
-    if (_isFavorite) {
+    products[widget.id]?['isFavorite'] = _isFavorite;
+    print(products[widget.id]?['isFavorite']);
+    /*if (_isFavorite) {
       print('${widget.productName} added to wishlist');
     } else {
       print('${widget.productName} removed from wishlist');
-    }
+    }*/
   }
 
   @override

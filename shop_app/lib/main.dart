@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'product_screen.dart';
 import 'reviews_screen.dart';
 import 'add_review.dart';
 import 'home_screen.dart';

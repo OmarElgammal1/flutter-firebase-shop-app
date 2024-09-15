@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
-
-
+import 'data.dart';
+import 'package:intl/intl.dart'; // For date formatting
 
 class AddReviewScreen extends StatefulWidget {
+  final int id;
+
+  AddReviewScreen({required this.id});
+
   @override
   _AddReviewScreenState createState() => _AddReviewScreenState();
 }
@@ -19,7 +23,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            // Handle back action
+            Navigator.pop(context); // Handle back action
           },
         ),
         title: Text('Add Review'),
@@ -51,7 +55,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             ),
             SizedBox(height: 16),
             Text(
-              "How was your experience ?",
+              "How was your experience?",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -62,7 +66,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
               controller: experienceController,
               maxLines: 5,
               decoration: InputDecoration(
-                hintText: 'Describe your experience?',
+                hintText: 'Describe your experience',
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
@@ -70,7 +74,7 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             ),
             SizedBox(height: 16),
             Text(
-              "Star",
+              "Rating",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -91,15 +95,12 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
             SizedBox(height: 16),
             Center(
               child: ElevatedButton(
-                onPressed: () {
-                  // Handle submit review
-                },
+                onPressed: _submitReview,
                 child: Text("Submit Review"),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 240, 233, 241),
+                  backgroundColor: Colors.purple,
                   padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   textStyle: TextStyle(fontSize: 16),
-                  
                 ),
               ),
             ),
@@ -108,4 +109,40 @@ class _AddReviewScreenState extends State<AddReviewScreen> {
       ),
     );
   }
+
+  void _submitReview() {
+    String name = nameController.text;
+    String experience = experienceController.text;
+
+    if (name.isEmpty || experience.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Please provide a name and review details')),
+      );
+      return;
+    }
+
+    String currentDate = DateFormat('dd MMM yyyy').format(DateTime.now());
+
+    Map<String, Object> newReview = {
+      'name': name,
+      'date': currentDate,
+      'details': experience,
+      'stars': rating,
+    };
+
+    if (products.containsKey(widget.id)) {
+      List<Map<String, Object>> reviews = (products[widget.id]?['reviews'] as List<dynamic>?)
+          ?.cast<Map<String, Object>>() ??
+          <Map<String, Object>>[];
+      reviews.add(newReview);
+      products[widget.id]?['reviews'] = reviews;
+      Navigator.pop(context, true);
+    } else {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Product not found')),
+      );
+    }
+  }
+
 }
